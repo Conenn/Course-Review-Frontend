@@ -1,25 +1,52 @@
-import logo from './logo.svg';
-import './App.css';
+import "@fontsource/roboto/300.css";
+import "@fontsource/roboto/400.css";
+import "@fontsource/roboto/500.css";
+import "@fontsource/roboto/700.css";
+import "bootstrap/dist/css/bootstrap.min.css";
+
+import Header from "./Navigation/Header";
+import React, { useEffect, useState } from "react";
+import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
+import CourseDetails from "./Pages/CourseDetails";
+import Home from "./Pages/Home";
+import AddReviewForm from "./Pages/AddReviewForm";
+
 
 function App() {
+  const [isLoading, setIsLoading] = useState(true);
+  const [data, setData] = useState([]);
+  const [error, setError] = useState(null);
+
+  useEffect(() => {
+    fetch("http://localhost:8080/courses")
+      .then((response) => {
+        if (response.ok) {
+          return response.json();
+        }
+        throw response;
+      })
+      .then((res) => {
+        setData(res);
+      })
+      .catch((error) => {
+        console.log("Error: ", error);
+        setError(error);
+      })
+      .finally(() => {
+        setIsLoading(false);
+      });
+  }, []);
+
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <React.Fragment>
+      <Header />
+      <Routes>
+        {!isLoading && <Route path="/" element={<Home data={data} />} />}
+        <Route path="course/:id" element={<CourseDetails/>}/>
+        <Route path="newreview" element={<AddReviewForm data={data}/>}/>
+      </Routes>
+    </React.Fragment>
   );
 }
-
 export default App;

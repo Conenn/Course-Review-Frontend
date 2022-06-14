@@ -1,0 +1,73 @@
+import "@fontsource/roboto/300.css";
+import "@fontsource/roboto/400.css";
+import "@fontsource/roboto/500.css";
+import "@fontsource/roboto/700.css";
+
+import { useLocation } from "react-router-dom";
+import React, { useEffect, useState } from "react";
+import ReviewCard from "../UI/ReviewCard";
+import { Container, Row } from "react-bootstrap";
+import { Typography } from "@mui/material";
+
+function CourseDetails(props) {
+  const { state } = useLocation();
+  const [data, setData] = useState([]);
+  const [error, setError] = useState(null);
+  const [isLoading, setIsLoading] = useState(true);
+
+  const currCourse = {
+    id: state.id,
+    name: state.name,
+    avgWorkload: state.avgWorkload,
+    rating: state.rating,
+    type: state.type,
+  };
+
+  useEffect(() => {
+    fetch(`http://localhost:8080/reviews/${currCourse.id}`)
+      .then((response) => {
+        if (response.ok) {
+          return response.json();
+        }
+        throw response;
+      })
+      .then((res) => {
+        setData(res);
+      })
+      .catch((error) => {
+        console.log("Error: ", error);
+        setError(error);
+      })
+      .finally(() => {
+        setIsLoading(false);
+      });
+  }, []);
+
+  if (data.length === 0) {
+    return (
+      <React.Fragment>
+        <Container>
+          <Typography mt={15} className="text-center align-items-center" variant="h2">
+            {" "}
+            No Reviews Yet...{" "}
+          </Typography>
+        </Container>
+      </React.Fragment>
+    );
+  }
+
+  if (data.length > 0) {
+    return (
+      <Container className="mt-5">
+        {data.map((review) => {
+          return (
+            <Row className="mt-3">
+              <ReviewCard course={currCourse.name} data={review} />
+            </Row>
+          );
+        })}
+      </Container>
+    );
+  }
+}
+export default CourseDetails;
