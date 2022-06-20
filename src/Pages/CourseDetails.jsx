@@ -5,9 +5,9 @@ import "@fontsource/roboto/700.css";
 
 import { useLocation } from "react-router-dom";
 import React, { useEffect, useState } from "react";
-import ReviewCard from "../UI/ReviewCard";
 import { Container, Row } from "react-bootstrap";
 import { Typography } from "@mui/material";
+import CommentCard from "../UI/CommentCard";
 
 function CourseDetails(props) {
   const { state } = useLocation();
@@ -62,7 +62,8 @@ function CourseDetails(props) {
         {data.map((review) => {
           return (
             <Row className="mt-3">
-              <ReviewCard course={currCourse.name} data={review} />
+              <CommentCard course={currCourse.name} data={review} />
+              {/* <ReviewCard course={currCourse.name} data={review} /> */}
             </Row>
           );
         })}

@@ -3,14 +3,12 @@ import "@fontsource/roboto/400.css";
 import "@fontsource/roboto/500.css";
 import "@fontsource/roboto/700.css";
 import "bootstrap/dist/css/bootstrap.min.css";
-
 import Header from "./Navigation/Header";
 import React, { useEffect, useState } from "react";
 import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
 import CourseDetails from "./Pages/CourseDetails";
 import Home from "./Pages/Home";
 import AddReviewForm from "./Pages/AddReviewForm";
-
 
 function App() {
   const [isLoading, setIsLoading] = useState(true);
@@ -37,14 +35,15 @@ function App() {
       });
   }, []);
 
-
   return (
     <React.Fragment>
       <Header />
       <Routes>
-        {!isLoading && <Route path="/" element={<Home data={data} />} />}
-        <Route path="course/:id" element={<CourseDetails/>}/>
-        <Route path="newreview" element={<AddReviewForm data={data}/>}/>
+        {!isLoading && (
+          <Route path="/" element={<Home data={data} />} />
+        )}
+        <Route path="course/:id" element={<CourseDetails />} />
+        <Route path="newreview" element={<AddReviewForm data={data} />} />
       </Routes>
     </React.Fragment>
   );

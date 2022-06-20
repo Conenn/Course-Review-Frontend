@@ -8,8 +8,7 @@ import TableHead from "@mui/material/TableHead";
 import TablePagination from "@mui/material/TablePagination";
 import TableRow from "@mui/material/TableRow";
 import { useNavigate } from "react-router-dom";
-import classes from './CourseTable.module.css'
-
+import classes from "./CourseTable.module.css";
 
 const columns = [
   { id: "id", label: "ID", minWidth: 170 },
@@ -17,7 +16,7 @@ const columns = [
   { id: "rating", align: "center", label: "Rating", minWidth: 100 },
   {
     id: "avgWorkload",
-    label: "Avg Workload",
+    label: "Workload",
     minWidth: 170,
     align: "center",
   },
@@ -28,7 +27,6 @@ const columns = [
     align: "right",
   },
 ];
-
 
 export default function StickyHeadTable(props) {
   let navigate = useNavigate();
@@ -44,9 +42,13 @@ export default function StickyHeadTable(props) {
     setPage(0);
   };
 
+  props.data.sort((a, b) => {
+    return b.rating - a.rating
+  })
+
   return (
     <Paper sx={{ width: "100%", overflow: "hidden" }}>
-      <TableContainer sx={{ maxHeight: 440 }}>
+      <TableContainer sx={{ maxHeight: 700 }}>
         <Table stickyHeader aria-label="sticky table">
           <TableHead>
             <TableRow>
@@ -62,15 +64,15 @@ export default function StickyHeadTable(props) {
             </TableRow>
           </TableHead>
           <TableBody>
-            
             {props.data
               .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
               .map((course) => {
-                console.log(course)
                 return (
                   <TableRow
                     className={classes.row}
-                    onClick={() => navigate(`/course/${course.id}`, {state: {...course}})}
+                    onClick={() =>
+                      navigate(`/course/${course.id}`, { state: { ...course } })
+                    }
                     hover
                     role="checkbox"
                     tabIndex={-1}
@@ -93,8 +95,9 @@ export default function StickyHeadTable(props) {
         </Table>
       </TableContainer>
       <TablePagination
-        rowsPerPageOptions={[10, 25, 100]}
+        rowsPerPageOptions={[10, 25]}
         component="div"
+        className="justify-content-center"
         count={props.data.length}
         rowsPerPage={rowsPerPage}
         page={page}
