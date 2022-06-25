@@ -53,9 +53,8 @@ function ReviewForm(props) {
   function linkify() {
     //hack to get hostname of a url without jquery/regex
     var pattern = /^https:\/\//i;
-    let tmpLink = `https://${link}`;
     var a = document.createElement("a");
-    a.href = tmpLink;
+    a.href = link;
 
     // Check if pattern is there in the string
     // or not with .test() method
