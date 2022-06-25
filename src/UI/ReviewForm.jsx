@@ -15,7 +15,6 @@ function ReviewForm(props) {
 
   function commentInputHandler(event) {
     setComment(event.target.value);
-    console.log(event.target.value);
   }
 
   function courseInputHandler(event) {
