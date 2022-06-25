@@ -1,8 +1,3 @@
-import "@fontsource/roboto/300.css";
-import "@fontsource/roboto/400.css";
-import "@fontsource/roboto/500.css";
-import "@fontsource/roboto/700.css";
-
 import { useLocation } from "react-router-dom";
 import React, { useEffect, useState } from "react";
 import { Container, Row } from "react-bootstrap";
@@ -24,7 +19,9 @@ function CourseDetails(props) {
   };
 
   useEffect(() => {
-    fetch(`http://localhost:8080/reviews/${currCourse.id}`)
+    fetch(
+      `https://wgu-course-review-api.herokuapp.com/reviews/${currCourse.id}`
+    )
       .then((response) => {
         if (response.ok) {
           return response.json();
@@ -41,13 +38,17 @@ function CourseDetails(props) {
       .finally(() => {
         setIsLoading(false);
       });
-  }, []);
+  }, [currCourse.id]);
 
-  if (data.length === 0) {
+  if (!isLoading && data.length === 0) {
     return (
       <React.Fragment>
         <Container>
-          <Typography mt={15} className="text-center align-items-center" variant="h2">
+          <Typography
+            mt={15}
+            className="text-center align-items-center"
+            variant="h2"
+          >
             {" "}
             No Reviews Yet...{" "}
           </Typography>
@@ -56,14 +57,13 @@ function CourseDetails(props) {
     );
   }
 
-  if (data.length > 0) {
+  if (!isLoading && data.length > 0) {
     return (
       <Container className="mt-5">
         {data.map((review) => {
           return (
-            <Row className="mt-3">
+            <Row key={review.id} className="mt-3">
               <CommentCard course={currCourse.name} data={review} />
-              {/* <ReviewCard course={currCourse.name} data={review} /> */}
             </Row>
           );
         })}

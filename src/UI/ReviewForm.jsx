@@ -1,32 +1,78 @@
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { Form } from "react-bootstrap";
 import { Button } from "@mui/material";
 import ComboBox from "./ComboBox";
-import { useNavigate } from "react-router-dom";
 import "bootstrap/dist/css/bootstrap.min.css";
 
 function ReviewForm(props) {
-  const navigate = useNavigate();
-
   const [course, setCourse] = useState("");
   const [rating, setRating] = useState();
   const [workload, setWorkload] = useState();
   const [comment, setComment] = useState();
+  const [posted, setPosted] = useState(false);
+  const [link, setLink] = useState();
+  const [header, setHeader] = useState();
 
   function commentInputHandler(event) {
     setComment(event.target.value);
-  }
-
-  function ratingInputHandler(event) {
-    setRating(event.target.value);
+    console.log(event.target.value);
   }
 
   function courseInputHandler(event) {
     setCourse(event.target.innerText);
   }
 
+  function ratingInputHandler(event) {
+    if (event.target.value > 5) {
+      setRating(5);
+    } else if (event.target.value < 1) {
+      setRating(1);
+    } else {
+      setRating(event.target.value);
+    }
+  }
+
   function workloadInputHandler(event) {
-    setWorkload(event.target.value);
+    if (event.target.value > 60) {
+      setWorkload(60);
+    } else if (event.target.value < 1) {
+      setWorkload(1);
+    } else {
+      setWorkload(event.target.value);
+    }
+  }
+
+  function onLinkChange(event) {
+    setLink(event.target.value);
+  }
+
+  function onHeaderChange(event) {
+    setHeader(event.target.value);
+  }
+
+  function linkify() {
+    var pattern = /^https:\/\//i;
+
+    // Check if pattern is there in the string
+    // or not with .test() method
+    if (pattern.test(link)) {
+      setLink(`[${link}](${link})`);
+    } else {
+      if (link.length < 30) {
+        setLink(`[${link}](https://${link})`);
+      } else {
+        //hack to get hostname of a url without jquery/regex
+        let tmpLink = `https://${link}`;
+        var a = document.createElement("a");
+        a.href = tmpLink;
+
+        setLink(`[${a.hostname}](https://${link})`);
+      }
+    }
+  }
+
+  function headify() {
+    setHeader(`# ${header}`);
   }
 
   function sumbitHandler() {
@@ -39,12 +85,18 @@ function ReviewForm(props) {
       comment: comment,
     };
 
-    const response = fetch("http://localhost:8080/reviews/", {
+    fetch("https://wgu-course-review-api.herokuapp.com/reviews", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
       },
       body: JSON.stringify(selectedCourse),
+    }).then((res) => {
+      if (res.ok) {
+        setPosted(true);
+      } else {
+        console.log("Error", res);
+      }
     });
   }
 
@@ -64,7 +116,13 @@ function ReviewForm(props) {
         controlId="formBasicRating"
       >
         <Form.Label>Course Rating</Form.Label>
-        <Form.Control type="number" placeholder="Enter Rating" />
+        <Form.Control
+          value={rating}
+          min="1"
+          max="5"
+          type="number"
+          placeholder="Enter Rating 1-5"
+        />
       </Form.Group>
       <Form.Group
         onChange={workloadInputHandler.bind(this)}
@@ -72,7 +130,13 @@ function ReviewForm(props) {
         controlId="formBasicWorkload"
       >
         <Form.Label>Workload</Form.Label>
-        <Form.Control type="number" placeholder="Enter Workload" />
+        <Form.Control
+          value={workload}
+          min="1"
+          max="60"
+          type="number"
+          placeholder="Enter Workload"
+        />
       </Form.Group>
       <Form.Group
         onChange={commentInputHandler.bind(this)}
@@ -80,11 +144,28 @@ function ReviewForm(props) {
         controlId="formBasicComment"
       >
         <Form.Label>Comment</Form.Label>
+        <Button onClick={linkify}>Create Link</Button>
+        <input
+          style={{ width: "20%" }}
+          onChange={onLinkChange}
+          value={link}
+          type="text"
+          placeholder="Enter link"
+        />
+        <Button onClick={headify}>Create Header</Button>
+        <input
+          style={{ width: "15%" }}
+          onChange={onHeaderChange}
+          value={header}
+          type="text"
+          placeholder="Enter Header"
+        />
         <Form.Control as="textarea" rows={5} placeholder="Enter Comment" />
       </Form.Group>
       <Button onClick={sumbitHandler} type="sumbit" variant="contained">
         Add Review
       </Button>
+      {posted && <div className="mt-2">Sumbitted Review!</div>}
     </Form>
   );
 }

@@ -16,7 +16,7 @@ function App() {
   const [error, setError] = useState(null);
 
   useEffect(() => {
-    fetch("http://localhost:8080/courses")
+    fetch("https://wgu-course-review-api.herokuapp.com/courses")
       .then((response) => {
         if (response.ok) {
           return response.json();
@@ -39,9 +39,7 @@ function App() {
     <React.Fragment>
       <Header />
       <Routes>
-        {!isLoading && (
-          <Route path="/" element={<Home data={data} />} />
-        )}
+        {!isLoading && <Route path="/" element={<Home data={data} />} />}
         <Route path="course/:id" element={<CourseDetails />} />
         <Route path="newreview" element={<AddReviewForm data={data} />} />
       </Routes>

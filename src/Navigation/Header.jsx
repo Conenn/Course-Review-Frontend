@@ -1,5 +1,5 @@
 import 'bootstrap/dist/css/bootstrap.min.css';
-import {Navbar, Nav, Container, NavDropdown} from 'react-bootstrap'
+import {Navbar, Nav, Container} from 'react-bootstrap'
 
 function Header() {
   return (
@@ -12,10 +12,7 @@ function Header() {
             <Nav.Link href="/newreview">Add Review</Nav.Link>        
           </Nav>
           <Nav>
-            <Nav.Link href=".">Github</Nav.Link>
-            <Nav.Link eventKey={2} href="/">
-              Login
-            </Nav.Link>
+            <Nav.Link target={"_blank"} href="https://github.com/Conenn/Course-Review-API">Github</Nav.Link>
           </Nav>
         </Navbar.Collapse>
       </Container>

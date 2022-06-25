@@ -5,7 +5,6 @@ import TableBody from "@mui/material/TableBody";
 import TableCell from "@mui/material/TableCell";
 import TableContainer from "@mui/material/TableContainer";
 import TableHead from "@mui/material/TableHead";
-import TablePagination from "@mui/material/TablePagination";
 import TableRow from "@mui/material/TableRow";
 import { useNavigate } from "react-router-dom";
 import classes from "./CourseTable.module.css";
@@ -31,7 +30,7 @@ const columns = [
 export default function StickyHeadTable(props) {
   let navigate = useNavigate();
   const [page, setPage] = React.useState(0);
-  const [rowsPerPage, setRowsPerPage] = React.useState(25);
+  const [rowsPerPage, setRowsPerPage] = React.useState(props.data.length);
 
   const handleChangePage = (event, newPage) => {
     setPage(newPage);
@@ -42,9 +41,10 @@ export default function StickyHeadTable(props) {
     setPage(0);
   };
 
+  //Sort by highest course rating
   props.data.sort((a, b) => {
-    return b.rating - a.rating
-  })
+    return b.rating - a.rating;
+  });
 
   return (
     <Paper sx={{ width: "100%", overflow: "hidden" }}>
@@ -94,6 +94,8 @@ export default function StickyHeadTable(props) {
           </TableBody>
         </Table>
       </TableContainer>
+      {/* 
+      Left in here until alignment is fixed or new table along with functions
       <TablePagination
         rowsPerPageOptions={[10, 25]}
         component="div"
@@ -103,7 +105,7 @@ export default function StickyHeadTable(props) {
         page={page}
         onPageChange={handleChangePage}
         onRowsPerPageChange={handleChangeRowsPerPage}
-      />
+      /> */}
     </Paper>
   );
 }
