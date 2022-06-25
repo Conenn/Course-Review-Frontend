@@ -55,7 +55,7 @@ function ReviewForm(props) {
 
     // Check if pattern is there in the string
     // or not with .test() method
-    if (pattern.test(link)) {
+    if (link.length < 25 && pattern.test(link)) {
       setLink(`[${link}](${link})`);
     } else {
       if (link.length < 20) {
