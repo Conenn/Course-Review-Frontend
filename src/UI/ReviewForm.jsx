@@ -58,7 +58,7 @@ function ReviewForm(props) {
     if (pattern.test(link)) {
       setLink(`[${link}](${link})`);
     } else {
-      if (link.length < 30) {
+      if (link.length < 20) {
         setLink(`[${link}](https://${link})`);
       } else {
         //hack to get hostname of a url without jquery/regex
