@@ -51,23 +51,18 @@ function ReviewForm(props) {
   }
 
   function linkify() {
+    //hack to get hostname of a url without jquery/regex
     var pattern = /^https:\/\//i;
+    let tmpLink = `https://${link}`;
+    var a = document.createElement("a");
+    a.href = tmpLink;
 
     // Check if pattern is there in the string
     // or not with .test() method
-    if (link.length < 25 && pattern.test(link)) {
-      setLink(`[${link}](${link})`);
+    if (pattern.test(link)) {
+      setLink(`[${a.hostname}](${link})`);
     } else {
-      if (link.length < 20) {
-        setLink(`[${link}](https://${link})`);
-      } else {
-        //hack to get hostname of a url without jquery/regex
-        let tmpLink = `https://${link}`;
-        var a = document.createElement("a");
-        a.href = tmpLink;
-
-        setLink(`[${a.hostname}](https://${link})`);
-      }
+      setLink(`[${a.hostname}](https://${link})`);
     }
   }
 
