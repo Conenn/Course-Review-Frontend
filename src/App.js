@@ -68,7 +68,7 @@ function App() {
         ).toFixed(1);
         data[course].avgWorkload = parseFloat(
           reviews[review].workload / counter
-        ).toFixed(2);
+        ).toFixed(1);
       }
     }
   }
