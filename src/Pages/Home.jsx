@@ -4,7 +4,7 @@ import "@fontsource/roboto/500.css";
 import "@fontsource/roboto/700.css";
 import "bootstrap/dist/css/bootstrap.min.css";
 import { Container, Col, Row } from "react-bootstrap/";
-import { useState } from "react";
+import React, { useState } from "react";
 import CourseTable from "../UI/CourseTable";
 import SearchBar from "../UI/SearchBar";
 
@@ -20,10 +20,9 @@ function Home(props) {
     );
     setFilteredCourses(filtered);
   }
-
   return (
     <Container className="mt-5">
-      <Row className="align-items-center justify-content-center">
+      <Row className="align-items-center">
         <Col xs={10}>
           <SearchBar onChange={filteredDataHandler} />
           <CourseTable data={filteredCourses} />

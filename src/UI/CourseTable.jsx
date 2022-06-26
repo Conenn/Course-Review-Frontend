@@ -15,7 +15,7 @@ const columns = [
   { id: "rating", align: "center", label: "Rating", minWidth: 100 },
   {
     id: "avgWorkload",
-    label: "Workload",
+    label: "Time to Complete/Hours",
     minWidth: 170,
     align: "center",
   },

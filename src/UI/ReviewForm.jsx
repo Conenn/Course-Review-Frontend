@@ -122,13 +122,13 @@ function ReviewForm(props) {
         className="mb-3"
         controlId="formBasicWorkload"
       >
-        <Form.Label>Workload</Form.Label>
+        <Form.Label>Total Time For Completion</Form.Label>
         <Form.Control
           value={workload}
           min="1"
-          max="60"
+          max="120"
           type="number"
-          placeholder="Enter Workload"
+          placeholder="Enter Total Time"
         />
       </Form.Group>
       <Form.Group
@@ -153,7 +153,7 @@ function ReviewForm(props) {
           type="text"
           placeholder="Enter Header"
         />
-        <Form.Control as="textarea" rows={5} placeholder="Enter Comment" />
+        <Form.Control as="textarea" rows={7} placeholder="Enter Comment" />
       </Form.Group>
       <Button onClick={sumbitHandler} type="sumbit" variant="contained">
         Add Review
