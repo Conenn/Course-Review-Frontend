@@ -12,7 +12,9 @@ import AddReviewForm from "./Pages/AddReviewForm";
 
 function App() {
   const [isLoading, setIsLoading] = useState(true);
+  const [isLoadingReviews, setIsLoadingReviews] = useState(true);
   const [data, setData] = useState([]);
+  const [reviews, setReviews] = useState([]);
   const [error, setError] = useState(null);
 
   useEffect(() => {
@@ -34,6 +36,42 @@ function App() {
         setIsLoading(false);
       });
   }, []);
+
+  useEffect(() => {
+    fetch(`https://wgu-course-review-api.herokuapp.com/reviews/`)
+      .then((response) => {
+        if (response.ok) {
+          return response.json();
+        }
+        throw response;
+      })
+      .then((res) => {
+        setReviews(res);
+      })
+      .catch((error) => {
+        console.log("Error: ", error);
+        setError(error);
+      })
+      .finally(() => {
+        setIsLoadingReviews(false);
+      });
+  }, []);
+
+  //Calculate averages until backend method is fixed
+  for (let course in data) {
+    let counter = 0;
+    for (const review in reviews) {
+      if (data[course].id === reviews[review].courseId) {
+        counter += 1;
+        data[course].rating = parseFloat(
+          reviews[review].rating / counter
+        ).toFixed(1);
+        data[course].avgWorkload = parseFloat(
+          reviews[review].workload / counter
+        ).toFixed(2);
+      }
+    }
+  }
 
   return (
     <React.Fragment>
