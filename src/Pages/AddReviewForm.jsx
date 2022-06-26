@@ -25,7 +25,7 @@ function AddReviewForm(props) {
             <Typography>
               {" "}
               You can also use the create link/header buttons by pasting in text
-              and the copying result.;
+              and the copying result.
             </Typography>
           </Col>
           <Col xs={12}>
