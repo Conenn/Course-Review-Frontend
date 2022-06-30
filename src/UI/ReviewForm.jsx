@@ -8,6 +8,7 @@ function ReviewForm(props) {
   const [course, setCourse] = useState("");
   const [rating, setRating] = useState();
   const [workload, setWorkload] = useState();
+  const [difficulty, setDifficulty] = useState();
   const [comment, setComment] = useState();
   const [posted, setPosted] = useState(false);
   const [link, setLink] = useState();
@@ -38,6 +39,16 @@ function ReviewForm(props) {
       setWorkload(1);
     } else {
       setWorkload(event.target.value);
+    }
+  }
+
+  function difficultyInputHandler(event) {
+    if (event.target.value > 5) {
+      setDifficulty(5);
+    } else if (event.target.value < 1) {
+      setDifficulty(1);
+    } else {
+      setDifficulty(event.target.value);
     }
   }
 
@@ -114,7 +125,7 @@ function ReviewForm(props) {
           min="1"
           max="5"
           type="number"
-          placeholder="Enter Rating 1-5"
+          placeholder="How would you rate this course 1/5?"
         />
       </Form.Group>
       <Form.Group
@@ -128,7 +139,21 @@ function ReviewForm(props) {
           min="1"
           max="120"
           type="number"
-          placeholder="Enter Total Time"
+          placeholder="How long did it take you to finish?"
+        />
+      </Form.Group>
+      <Form.Group
+        onChange={difficultyInputHandler.bind(this)}
+        className="mb-3"
+        controlId="formBasicDifficulty"
+      >
+        <Form.Label>Difficulty</Form.Label>
+        <Form.Control
+          value={difficulty}
+          min="1"
+          max="5"
+          type="number"
+          placeholder="How hard would you say this course was 1/5?"
         />
       </Form.Group>
       <Form.Group

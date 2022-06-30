@@ -69,6 +69,7 @@ function App() {
         data[course].avgWorkload = parseFloat(
           reviews[review].workload / counter
         ).toFixed(1);
+        data[course].difficulty = parseFloat(reviews[review].difficulty / counter).toFixed(1)
       }
     }
   }

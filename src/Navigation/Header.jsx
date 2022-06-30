@@ -10,6 +10,9 @@ function Header() {
   ***While posting reviews please keep in mind Western Governors University's Policy on Academic Integrity!***
   `;
 
+  let updates = `***29th June*** - I've added a difficulty field to the courses and updated type to display WGU as 
+                i will be adding courses from SDC, Straigtherline and Sophia as well.`
+
   return (
     <Navbar collapseOnSelect expand="lg" bg="dark" variant="dark">
       <Container>
@@ -22,6 +25,11 @@ function Header() {
               title={"Why and How This Works"}
               buttonName={"Learn More"}
               content={content}
+            />
+            <AlertDialogSlide
+              title={"App Updates"}
+              buttonName={"What's New"}
+              content={updates}
             />
           </Nav>
           <Nav>

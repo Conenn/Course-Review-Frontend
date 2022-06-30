@@ -12,7 +12,7 @@ import classes from "./CourseTable.module.css";
 const columns = [
   { id: "id", label: "ID", minWidth: 170 },
   { id: "name", label: "Name", minWidth: 170 },
-  { id: "rating", align: "center", label: "Rating", minWidth: 100 },
+  { id: "difficulty", align: "center", label: "Difficulty 1/5", minWidth: 100 },
   {
     id: "avgWorkload",
     label: "Time to Complete/Hours",
