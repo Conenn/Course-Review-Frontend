@@ -17,6 +17,7 @@ function App() {
   const [reviews, setReviews] = useState([]);
   const [error, setError] = useState(null);
 
+  
   useEffect(() => {
     fetch("https://wgu-course-review-api.herokuapp.com/courses")
       .then((response) => {
@@ -58,22 +59,23 @@ function App() {
   }, []);
 
   //Calculate averages until backend method is fixed
-  for (let course in data) {
-    let counter = 0;
-    for (const review in reviews) {
-      if (data[course].id === reviews[review].courseId) {
-        counter += 1;
-        data[course].rating = parseFloat(
-          reviews[review].rating / counter
-        ).toFixed(1);
-        data[course].avgWorkload = parseFloat(
-          reviews[review].workload / counter
-        ).toFixed(1);
-        data[course].difficulty = parseFloat(reviews[review].difficulty / counter).toFixed(1)
-      }
-    }
-  }
+  // for (let course in data) {
+  //   let counter = 0;
+  //   for (const review in reviews) {
+  //     if (data[course].id === reviews[review].courseId) {
+  //       counter += 1;
+  //       data[course].rating = parseFloat(
+  //         reviews[review].rating / counter
+  //       ).toFixed(1);
+  //       data[course].avgWorkload = parseFloat(
+  //         reviews[review].workload / counter
+  //       ).toFixed(1);
+  //       data[course].difficulty = parseFloat(reviews[review].difficulty / counter).toFixed(1)
+  //     }
+  //   }
+  // }
 
+  
   return (
     <React.Fragment>
       <Header />
