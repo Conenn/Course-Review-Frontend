@@ -20,7 +20,7 @@ function CourseDetails(props) {
 
   useEffect(() => {
     fetch(
-      `https://wgu-course-review-api.herokuapp.com/courses/${currCourse.id}`
+      `https://wgu-course-review-api.herokuapp.com/reviews/${currCourse.id}`
     )
       .then((response) => {
         if (response.ok) {
