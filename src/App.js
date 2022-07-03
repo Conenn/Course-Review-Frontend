@@ -38,25 +38,25 @@ function App() {
       });
   }, []);
 
-  useEffect(() => {
-    fetch(`https://wgu-course-review-api.herokuapp.com/reviews/`)
-      .then((response) => {
-        if (response.ok) {
-          return response.json();
-        }
-        throw response;
-      })
-      .then((res) => {
-        setReviews(res);
-      })
-      .catch((error) => {
-        console.log("Error: ", error);
-        setError(error);
-      })
-      .finally(() => {
-        setIsLoadingReviews(false);
-      });
-  }, []);
+  // useEffect(() => {
+  //   fetch(`https://wgu-course-review-api.herokuapp.com/reviews/`)
+  //     .then((response) => {
+  //       if (response.ok) {
+  //         return response.json();
+  //       }
+  //       throw response;
+  //     })
+  //     .then((res) => {
+  //       setReviews(res);
+  //     })
+  //     .catch((error) => {
+  //       console.log("Error: ", error);
+  //       setError(error);
+  //     })
+  //     .finally(() => {
+  //       setIsLoadingReviews(false);
+  //     });
+  // }, []);
 
   //Calculate averages until backend method is fixed
   // for (let course in data) {
