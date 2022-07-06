@@ -89,7 +89,7 @@ function ReviewForm(props) {
       comment: comment,
     };
 
-    fetch("https://wgu-course-review-api.herokuapp.com/post/reviews", {
+    fetch("https://wgu-course-review-api.herokuapp.com/api/post/reviews", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
