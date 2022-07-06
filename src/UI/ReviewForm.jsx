@@ -33,8 +33,8 @@ function ReviewForm(props) {
   }
 
   function workloadInputHandler(event) {
-    if (event.target.value > 60) {
-      setWorkload(60);
+    if (event.target.value > 200) {
+      setWorkload(200);
     } else if (event.target.value < 1) {
       setWorkload(1);
     } else {
@@ -137,7 +137,7 @@ function ReviewForm(props) {
         <Form.Control
           value={workload}
           min="1"
-          max="120"
+          max="200"
           type="number"
           placeholder="How long did it take you to finish?"
         />
