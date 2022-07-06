@@ -19,7 +19,7 @@ function App() {
 
   
   useEffect(() => {
-    fetch("https://wgu-course-review-api.herokuapp.com/courses")
+    fetch("https://wgu-course-review-api.herokuapp.com/api/courses")
       .then((response) => {
         if (response.ok) {
           return response.json();
@@ -39,7 +39,7 @@ function App() {
   }, []);
 
   // useEffect(() => {
-  //   fetch(`https://wgu-course-review-api.herokuapp.com/reviews/`)
+  //   fetch(`https://wgu-course-review-api.herokuapp.com/api/reviews/`)
   //     .then((response) => {
   //       if (response.ok) {
   //         return response.json();
