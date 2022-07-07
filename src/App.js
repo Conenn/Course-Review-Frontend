@@ -19,7 +19,7 @@ function App() {
 
   
   useEffect(() => {
-    fetch("https://wgu-course-review-api.herokuapp.com/api/courses")
+    fetch("https://wgu-course-review-api.herokuapp.com/courses")
       .then((response) => {
         if (response.ok) {
           return response.json();
