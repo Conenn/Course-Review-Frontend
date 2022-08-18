@@ -1,10 +1,7 @@
 import React, { useState, useRef } from "react";
 import { useNavigate } from "react-router-dom";
-import { signInWithEmailAndPassword } from "firebase/auth";
-import { auth } from "../Config/Firebase-Config";
 import { Container, Row, Col, Card, Form, Button } from "react-bootstrap";
-import { AuthProvider, useAuth } from "../Contexts/AuthContexts";
-import { Alert } from "bootstrap";
+import { useAuth } from "../Contexts/AuthContexts";
 import { Link } from "react-router-dom";
 
 const Signup = () => {
@@ -37,8 +34,15 @@ const Signup = () => {
   if (currentUser && !currentUser.emailVerified) {
     return (
       <React.Fragment>
-        <p>Verify Email </p>
-        <button onClick={sendEmailHandler}>verify</button>
+        <Container
+          className="d-flex align-items-center justify-content-center"
+          style={{ minHeight: "100vh" }}
+        >
+          <h2 className="text-center mb-4">
+            {" "}
+            Please verify your WGU email address
+          </h2>
+        </Container>
       </React.Fragment>
     );
   }
