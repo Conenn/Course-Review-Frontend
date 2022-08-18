@@ -1,11 +1,11 @@
-import * as React from 'react';
-import Button from '@mui/material/Button';
-import Dialog from '@mui/material/Dialog';
-import DialogActions from '@mui/material/DialogActions';
-import DialogContent from '@mui/material/DialogContent';
-import DialogContentText from '@mui/material/DialogContentText';
-import DialogTitle from '@mui/material/DialogTitle';
-import Slide from '@mui/material/Slide';
+import * as React from "react";
+import Button from "@mui/material/Button";
+import Dialog from "@mui/material/Dialog";
+import DialogActions from "@mui/material/DialogActions";
+import DialogContent from "@mui/material/DialogContent";
+import DialogContentText from "@mui/material/DialogContentText";
+import DialogTitle from "@mui/material/DialogTitle";
+import Slide from "@mui/material/Slide";
 import { Nav } from "react-bootstrap";
 import ReactMarkdown from "react-markdown";
 
@@ -37,9 +37,7 @@ export default function AlertDialogSlide(props) {
         <DialogTitle>{props.title}</DialogTitle>
         <DialogContent>
           <DialogContentText id="alert-dialog-slide-description">
-            {
-              <ReactMarkdown children={props.content}/>
-            }
+            {<ReactMarkdown children={props.content} />}
           </DialogContentText>
         </DialogContent>
         <DialogActions>

@@ -1,6 +1,9 @@
 import "bootstrap/dist/css/bootstrap.min.css";
 import { Navbar, Nav, Container } from "react-bootstrap";
 import AlertDialogSlide from "../UI/AlertDialogSlide";
+import { useAuth } from "../Contexts/AuthContexts";
+import React, { useState } from "react";
+import { useNavigate } from "react-router-dom";
 
 function Header() {
   let content = `This website was created so WGU students can review and rate courses and to keep it organized for incoming students to 
@@ -10,8 +13,26 @@ function Header() {
   ***While posting reviews please keep in mind Western Governors University's Policy on Academic Integrity!***
   `;
 
-  let updates = `***29th June*** - I've added a difficulty field to the courses and updated type to display WGU as 
-                i will be adding courses from SDC, Straigtherline and Sophia as well.`
+  let resources = `***Discord:*** [https://discord.gg/WGU](https://discord.gg/unwgu) \n\n
+  ***Github Student Developer pack:*** [https://github.com](https://education.github.com/pack) \n\n
+  ***Reddit:*** [https://reddit.com/r/WGU/](https://www.reddit.com/r/WGU/)\n\n
+  ***Amazing Google Drive of WGU Courses:*** [https://drive.google.com/WGU](https://drive.google.com/drive/u/4/folders/1sqzEuxJOsouYPLkKUqtSXU_Lp0rVOVg2)
+  `
+
+  const [error, setError] = useState("");
+  const { currentUser, logout } = useAuth();
+  let navigate = useNavigate();
+
+  async function logoutHandler(e) {
+    setError("");
+
+    try {
+      await logout();
+      navigate("/");
+    } catch {
+      setError("Failed to log out");
+    }
+  }
 
   return (
     <Navbar collapseOnSelect expand="lg" bg="dark" variant="dark">
@@ -27,15 +48,18 @@ function Header() {
               content={content}
             />
             <AlertDialogSlide
-              title={"App Updates"}
-              buttonName={"What's New"}
-              content={updates}
+              title={"Resources Recommended by WGU Students"}
+              buttonName={"Resources"}
+              content={resources}
             />
           </Nav>
           <Nav>
-            <Nav.Link target={"_blank"} href="https://github.com/Conenn">
+            {!currentUser && <Nav.Link href="/login">Log in</Nav.Link>}
+            {currentUser && <Nav.Link href="/profile">Profile</Nav.Link>}
+            <Nav.Link target={"_blank"} href="https://github.com/Conenn/Course-Review-Frontend/issues">
               Github
             </Nav.Link>
+            {currentUser && <Nav.Link onClick={logoutHandler}>Logout</Nav.Link>}
           </Nav>
         </Navbar.Collapse>
       </Container>

@@ -34,14 +34,22 @@ function CommentCard(...props) {
           }}
         >
           <Chip
-            label={`Workload ${props[0].data.workload}`}
+            label={`Time To Complete - ${props[0].data.workload} Hours`}
             variant="outlined"
+            color="primary"
           ></Chip>
           <Chip
             label={`Rating ${props[0].data.rating}`}
             sx={{ ml: 1 }}
             variant="outlined"
-            color="primary"
+            color="success"
+          ></Chip>
+
+          <Chip
+            label={`Difficulty ${props[0].data.difficulty}`}
+            sx={{ ml: 1 }}
+            variant="outlined"
+            color="warning"
           ></Chip>
         </Box>
       </CardContent>

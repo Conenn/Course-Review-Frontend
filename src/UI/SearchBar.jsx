@@ -1,4 +1,5 @@
 import { TextField } from "@mui/material";
+import React from "react";
 
 function SearchBar(props) {
   return (

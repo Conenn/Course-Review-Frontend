@@ -5,13 +5,15 @@ import "@fontsource/roboto/700.css";
 import "bootstrap/dist/css/bootstrap.min.css";
 import { Container, Col, Row } from "react-bootstrap/";
 import React, { useState } from "react";
-import CourseTable from "../UI/CourseTable";
 import SearchBar from "../UI/SearchBar";
-function Home(props) {
+import Transfer from "../UI/Transfer";
+
+function TransferCourses(props) {
   const [filteredCourses, setFilteredCourses] = useState(props.data);
 
   //Filter courses by matching first n letters of course by search value
   function filteredDataHandler(event) {
+    console.log(event.target.value);
     const filtered = props.data.filter(
       (course) =>
         course.name.toLowerCase().substring(0, event.target.value.length) ===
@@ -25,10 +27,10 @@ function Home(props) {
       <Row className="align-items-center">
         <Col xs={10}>
           <SearchBar onChange={filteredDataHandler} />
-          <CourseTable data={filteredCourses} />
+          <Transfer data={filteredCourses} />
         </Col>
       </Row>
     </Container>
   );
 }
-export default Home;
+export default TransferCourses;

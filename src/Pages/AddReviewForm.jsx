@@ -29,7 +29,7 @@ function AddReviewForm(props) {
             </Typography>
           </Col>
           <Col xs={12}>
-            <Form data={props.data} />
+            <Form data={props.data} transferData={props.transferData}/>
           </Col>
           <Col></Col>
         </Row>

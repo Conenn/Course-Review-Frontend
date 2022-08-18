@@ -8,6 +8,7 @@ import TableHead from "@mui/material/TableHead";
 import TableRow from "@mui/material/TableRow";
 import { useNavigate } from "react-router-dom";
 import classes from "./CourseTable.module.css";
+import { TablePagination } from "@mui/material";
 
 const columns = [
   { id: "id", label: "ID", minWidth: 170 },
@@ -19,9 +20,10 @@ const columns = [
     minWidth: 170,
     align: "center",
   },
+  { id: "rating", align: "center", label: "Rating 1/5", minWidth: 100 },
   {
     id: "type",
-    label: "Type",
+    label: "Offered By",
     minWidth: 170,
     align: "right",
   },
@@ -37,7 +39,11 @@ export default function StickyHeadTable(props) {
   };
 
   const handleChangeRowsPerPage = (event) => {
-    setRowsPerPage(+event.target.value);
+    if (event.target.value == "All") {
+      setRowsPerPage(props.data.length);
+    } else {
+      setRowsPerPage(+event.target.value);
+    }
     setPage(0);
   };
 
@@ -94,10 +100,8 @@ export default function StickyHeadTable(props) {
           </TableBody>
         </Table>
       </TableContainer>
-      {/* 
-      Left in here until alignment is fixed or new table along with functions
       <TablePagination
-        rowsPerPageOptions={[10, 25]}
+        rowsPerPageOptions={[10, 25, 50, "All"]}
         component="div"
         className="justify-content-center"
         count={props.data.length}
@@ -105,7 +109,7 @@ export default function StickyHeadTable(props) {
         page={page}
         onPageChange={handleChangePage}
         onRowsPerPageChange={handleChangeRowsPerPage}
-      /> */}
+      />
     </Paper>
   );
 }

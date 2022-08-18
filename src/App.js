@@ -9,17 +9,20 @@ import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
 import CourseDetails from "./Pages/CourseDetails";
 import Home from "./Pages/Home";
 import AddReviewForm from "./Pages/AddReviewForm";
+import Login from "./Components/Login";
+import Signup from "./Components/Signup";
+import { AuthProvider } from "./Contexts/AuthContexts";
+import PrivateRoute from "./Components/PrivateRoute";
+import Profile from "./Components/Profile";
+import ForgotPassword from "./Components/ForgotPassword";
 
 function App() {
   const [isLoading, setIsLoading] = useState(true);
-  const [isLoadingReviews, setIsLoadingReviews] = useState(true);
   const [data, setData] = useState([]);
-  const [reviews, setReviews] = useState([]);
   const [error, setError] = useState(null);
 
-  
   useEffect(() => {
-    fetch("https://wgu-course-review-api.herokuapp.com/courses")
+    fetch("https://wgu-course-review-api.herokuapp.com/api/courses")
       .then((response) => {
         if (response.ok) {
           return response.json();
@@ -30,7 +33,6 @@ function App() {
         setData(res);
       })
       .catch((error) => {
-        console.log("Error: ", error);
         setError(error);
       })
       .finally(() => {
@@ -38,52 +40,34 @@ function App() {
       });
   }, []);
 
-  // useEffect(() => {
-  //   fetch(`https://wgu-course-review-api.herokuapp.com/api/reviews/`)
-  //     .then((response) => {
-  //       if (response.ok) {
-  //         return response.json();
-  //       }
-  //       throw response;
-  //     })
-  //     .then((res) => {
-  //       setReviews(res);
-  //     })
-  //     .catch((error) => {
-  //       console.log("Error: ", error);
-  //       setError(error);
-  //     })
-  //     .finally(() => {
-  //       setIsLoadingReviews(false);
-  //     });
-  // }, []);
-
-  //Calculate averages until backend method is fixed
-  // for (let course in data) {
-  //   let counter = 0;
-  //   for (const review in reviews) {
-  //     if (data[course].id === reviews[review].courseId) {
-  //       counter += 1;
-  //       data[course].rating = parseFloat(
-  //         reviews[review].rating / counter
-  //       ).toFixed(1);
-  //       data[course].avgWorkload = parseFloat(
-  //         reviews[review].workload / counter
-  //       ).toFixed(1);
-  //       data[course].difficulty = parseFloat(reviews[review].difficulty / counter).toFixed(1)
-  //     }
-  //   }
-  // }
-
-  
   return (
     <React.Fragment>
-      <Header />
-      <Routes>
-        {!isLoading && <Route path="/" element={<Home data={data} />} />}
-        <Route path="course/:id" element={<CourseDetails />} />
-        <Route path="newreview" element={<AddReviewForm data={data} />} />
-      </Routes>
+      <AuthProvider>
+        <Header />
+        <Routes>
+          {!isLoading && <Route path="/" element={<Home data={data} />} />}
+          <Route path="course/:id" element={<CourseDetails />} />
+          <Route
+            path="/newreview"
+            element={
+              <PrivateRoute>
+                <AddReviewForm data={data} />
+              </PrivateRoute>
+            }
+          />
+          <Route
+            path="/profile"
+            element={
+              <PrivateRoute>
+                <Profile />
+              </PrivateRoute>
+            }
+          />
+          <Route path="/login" element={<Login />} />
+          <Route path="/signup" element={<Signup />} />
+          <Route path="/forgotpassword" element={<ForgotPassword />} />
+        </Routes>
+      </AuthProvider>
     </React.Fragment>
   );
 }
