@@ -73,7 +73,7 @@ const ForgotPassword = () => {
             </Card.Body>
           </Card>
           <div className="w-100 text-center mt-2">
-            Need an account? <Link to="/login">Login</Link>
+            Already have an account? <Link to="/login">Login</Link>
           </div>
         </div>
       </Container>
